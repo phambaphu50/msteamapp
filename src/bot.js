@@ -46,10 +46,9 @@ export class EchoBot extends TeamsActivityHandler {
     constructor() {
         super();
         this.onMessage(async (context, next) => {
-            // console.log(context);
             TurnContext.removeRecipientMention(context.activity);
             const text = context.activity.text.trim().toLocaleLowerCase();
-            await context.sendActivity('You said ' + text);
+            // await context.sendActivity('You said ' + text);
             if (text.includes('questions')) {
                 await this.runQuestion(context);
             }
@@ -88,7 +87,7 @@ export class EchoBot extends TeamsActivityHandler {
                 {
                     type: 'Input.ChoiceSet',
                     id: 'snooze',
-                    value: '${reminders.overrides[0].minutes}',
+                    value: '1',
                     choices: [
                         {
                             title: '1',
