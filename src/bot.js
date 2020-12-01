@@ -49,7 +49,7 @@ export class EchoBot extends TeamsActivityHandler {
             // console.log(context);
             TurnContext.removeRecipientMention(context.activity);
             const text = context.activity.text.trim().toLocaleLowerCase();
-            // await context.sendActivity('You said ' + text);
+            await context.sendActivity('You said ' + text);
             if (text.includes('questions')) {
                 await this.runQuestion(context);
             }
@@ -68,14 +68,14 @@ export class EchoBot extends TeamsActivityHandler {
                 },
                 {
                     type: 'TextBlock',
-                    text: ' ${location} ',
+                    text: '',
                     isSubtle: true,
                     wrap: true,
                 },
                 {
                     type: 'TextBlock',
                     text:
-                        "${formatDateTime(start.dateTime, 'HH:mm')} - ${formatDateTime(end.dateTime, 'hh:mm')}",
+                        "",
                     isSubtle: true,
                     spacing: 'None',
                     wrap: true,
@@ -91,10 +91,13 @@ export class EchoBot extends TeamsActivityHandler {
                     value: '${reminders.overrides[0].minutes}',
                     choices: [
                         {
-                            $data: '${reminders.overrides}',
-                            title: '${minutes} minutes',
-                            value: '${minutes}',
+                            title: '1',
+                            value: '1',
                         },
+                        {
+                            title: '2',
+                            value: '2',
+                        }
                     ],
                 },
             ],
@@ -117,16 +120,9 @@ export class EchoBot extends TeamsActivityHandler {
             version: '1.0.0',
         };
         const activeCard = CardFactory.adaptiveCard(card);
-        await context.sendActivity(
-            'Please give a minutes to answer the questions!'
-        );
-        // await context.sendActivity(activeCard);
-        return {
-            composeExtension: {
-                type: 'result',
-                attachmentLayout: 'list',
-                attachments: [activeCard],
-            },
-        };
+        await context.sendActivity({
+            text: 'Please give a minutes to answer the questions!', 
+            attachments: [activeCard]
+        });
     }
 }
